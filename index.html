@@ -18,9 +18,7 @@
                                 <accordion-heading>
                                     {{recurso.tipo}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
-                                <button ng-drag="true" ng-drag-data="tipoRecurso" class="btn btn-default" type="button" ng-repeat="tipoRecurso in recurso.recursos">
-                                    {{tipoRecurso.descripcion}}
-                                </button>
+                                <div class="btn btn-default" ng-drag="true" ng-drag-data="tipoRecurso" ng-repeat="tipoRecurso in recurso.recursos"> {{tipoRecurso.descripcion}} </div>
                             </accordion-group>
                         </accordion>
 
@@ -35,10 +33,13 @@
                                 <accordion-heading>
                                     {{curso.nombre}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
-                                <div class="well well-lg"  ng-repeat="asignatura in curso.asignaturas" ng-drop="true">
+                                <div class="well well-lg"  ng-repeat="asignatura in curso.asignaturas" ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
                                     {{asignatura.nombre}}
-                                </div> 
-                                
+                                    <div class="btn btn-default" ng-repeat="obj in droppedObjects1" ng-drag="false" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}">
+                                        {{obj.descripcion}}
+                                    </div>
+                                </div>
+
                             </accordion-group>
                         </accordion>
                         </tab>
@@ -48,10 +49,6 @@
             </div>
         </div>
     </div>
-
-    <div ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
-                                Drop
-                                </div>
 
 
 
