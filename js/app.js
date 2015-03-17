@@ -1,12 +1,17 @@
-var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','ngDraggable']);
+var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists']);
 
 requisitos_aulas.controller("controllerTitulaciones",function ($scope) {
     var titu = this
 
-    titu.Asignaturas1GII = [{id: "p1",nombre: "Programación 1"},{id: "p2",nombre: "Programación 2"}, {id: "p3",nombre: "Informática Básica"}];
-    titu.Asignaturas2GII = [{nombre: "Programación y Estructuras de Datos"},{nombre: "Diseño de Bases de Datos"}, {nombre: "Lenguajes y Paradigmas de Programación"}];
+    titu.Asignaturas1GII = [{id: "p1",nombre: "Programación 1",recursosTeoria: [],recursosPract: []},{id: "p2",nombre: "Programación 2",recursosTeoria: [],recursosPract: []}, {id: "p3",nombre: "Informática Básica",recursosTeoria: [],recursosPract: []}];
+    titu.Asignaturas2GII = [{nombre: "Programación y Estructuras de Datos",listMaana: [],recursosPract: []},{nombre: "Diseño de Bases de Datos",recursosTeoria: [],recursosPract: []}, {nombre: "Lenguajes y Paradigmas de Programación",recursosTeoria: [],recursosPract: []}];
     titu.CursosGII = [{nombre: "Primer Curso", asignaturas: titu.Asignaturas1GII}, {nombre: "Segundo Curso", asignaturas: titu.Asignaturas2GII}];
-    
+
+    $scope.models = {
+        selected: null,
+        "B": []
+    };
+
 
     titu.lista = [{nombre:"Grado Ingeniería Informática", acro:"GII", cursos: titu.CursosGII},{nombre:"Grado Ingeniería Multimedia", acro:"GIM"}];
     titu.recursosAula = [{descripcion:"Mesa de dibujo avatible"},{descripcion:"Mesa de dibujo plana"},{descripcion:"Pizarra doble"}];
@@ -15,7 +20,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope) {
         {tipo:"Hardware", recursos: titu.recursosHardware},
         {tipo:"Software"}];
 
-    $scope.droppedObjects1 = [];
+
 
     titu.showTitu = function (titulacion) {
         console.log(titulacion);
