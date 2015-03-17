@@ -36,7 +36,7 @@
                 <div class="col-md-8 column">
                     <div>
                       <tabset type="pills">
-                        <tab ng-repeat="titulacion in titu.lista" heading="{{titulacion.acro}}" active="tab.active" disabled="tab.disabled">
+                        <tab ng-repeat="titulacion in titulaciones" heading="{{titulacion.CODTIT}}" active="tab.active" disabled="tab.disabled">
                           <accordion id="accordionCustom" close-others="oneAtATime" >
                             <accordion-group is-open="status.open" ng-repeat="curso in titulacion.cursos">
                                 <accordion-heading>
@@ -46,7 +46,7 @@
                                         <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th class="tablaNombreAsignatura">{{asignatura.nombre}}</th>
+                                                    <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}</th>
                                                     <th>Recurso</th>
                                                 </tr>
                                                 </thead>

@@ -1,7 +1,32 @@
 var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists']);
 
-requisitos_aulas.controller("controllerTitulaciones",function ($scope) {
+requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
+
+    $http.get('http://localhost/RequisitosAPI/titulaciones').
+        success(function(data, status, headers, config) {
+            $scope.titulaciones=data;
+            console.log(data);
+            angular.forEach(data,function(value, key) {
+                $http.get('http://localhost/RequisitosAPI/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
+                    success(function(data, status, headers, config) {
+                        console.log(data);
+                        value.cursos=[];
+                        curso=[{nombre:"Primer Curso",asignaturas:[] }];
+                        value.cursos.push(curso);
+                        value.cursos[0].asignaturas=data;
+                    });
+
+
+            });
+
+
+
+
+        }).
+        error(function(data, status, headers, config) {
+            console.log(data);
+        });
 
     titu.Asignaturas1GII = [{id: "p1",nombre: "Programación 1",recursosTeoria: [],recursosPract: []},{id: "p2",nombre: "Programación 2",recursosTeoria: [],recursosPract: []}, {id: "p3",nombre: "Informática Básica",recursosTeoria: [],recursosPract: []}];
     titu.Asignaturas2GII = [{nombre: "Programación y Estructuras de Datos",listMaana: [],recursosPract: []},{nombre: "Diseño de Bases de Datos",recursosTeoria: [],recursosPract: []}, {nombre: "Lenguajes y Paradigmas de Programación",recursosTeoria: [],recursosPract: []}];
