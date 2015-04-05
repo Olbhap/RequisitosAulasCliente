@@ -20,13 +20,13 @@
                                     {{recurso.tipo}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
 
-
                                     <div class="btn btn-default" ng-repeat="tipoRecurso in recurso.recursos"
                                          dnd-draggable="tipoRecurso"
                                          dnd-effect-allowed="copy"
                                          dnd-selected="models.selected = tipoRecurso">
                                         {{tipoRecurso.descripcion}}
                                     </div>
+
                                 </div>
                             </accordion-group>
                         </accordion>

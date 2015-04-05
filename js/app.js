@@ -6,15 +6,37 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     $http.get('http://localhost/RequisitosAPI/titulaciones').
         success(function(data, status, headers, config) {
             $scope.titulaciones=data;
-            console.log(data);
             angular.forEach(data,function(value, key) {
                 $http.get('http://localhost/RequisitosAPI/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
                     success(function(data, status, headers, config) {
-                        console.log(data);
                         value.cursos=[];
-                        curso=[{nombre:"Primer Curso",asignaturas:[] }];
-                        value.cursos.push(curso);
-                        value.cursos[0].asignaturas=data;
+                        curso1={nombre:"Primer Curso",asignaturas:[]};
+                        curso2={nombre:"Segundo Curso",asignaturas:[]};
+                        curso3={nombre:"TercerCurso",asignaturas:[]};
+                        curso4={nombre:"Cuarto Curso",asignaturas:[]};
+
+                        angular.forEach(data,function(value,key) {
+                            switch(value.CURSO) {
+                                case "1":     curso1.asignaturas.push(value);
+                                            break;
+                                case "2":     curso2.asignaturas.push(value);
+                                            break;
+                                case "3":     curso3.asignaturas.push(value);
+                                            break;
+                                case "4":     curso4.asignaturas.push(value);
+                                            break;
+                                default:    curso4.asignaturas.push(value);
+                                            break;
+                            }
+                            value.recursosTeoria = [];
+                            value.recursosPract = [];
+                        });
+
+                        value.cursos.push(curso1);
+                        value.cursos.push(curso2);
+                        value.cursos.push(curso3);
+                        value.cursos.push(curso4);
+                        console.log(value);
                     });
 
 
