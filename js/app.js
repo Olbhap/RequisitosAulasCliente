@@ -3,11 +3,11 @@ var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLi
 requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
 
-    $http.get('http://localhost/RequisitosAPI/titulaciones').
+    $http.get('http://donpisoalicante.com/TFGUA/titulaciones').
         success(function(data, status, headers, config) {
             $scope.titulaciones=data;
             angular.forEach(data,function(value, key) {
-                $http.get('http://localhost/RequisitosAPI/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
+                $http.get('http://donpisoalicante.com/TFGUA/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
                     success(function(data, status, headers, config) {
                         value.cursos=[];
                         curso1={nombre:"Primer Curso",asignaturas:[]};
