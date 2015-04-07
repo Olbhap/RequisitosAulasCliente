@@ -18,7 +18,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                         value.cursos=[];
                         curso1={nombre:"Primer Curso",asignaturas:[]};
                         curso2={nombre:"Segundo Curso",asignaturas:[]};
-                        curso3={nombre:"TercerCurso",asignaturas:[]};
+                        curso3={nombre:"Tercer Curso",asignaturas:[]};
                         curso4={nombre:"Cuarto Curso",asignaturas:[]};
 
                         angular.forEach(data,function(asignatura,key) {
@@ -38,6 +38,8 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                             asignatura.recursosTeoria = [];
                             asignatura.recursosPract = [];
                             asignatura.actividades = [];
+
+
 
                             $http.get('http://donpisoalicante.com/TFGUA/asignaturas/'+asignatura.CODASI+'/actividades').
                             success(function(data) {
