@@ -1,48 +1,63 @@
-var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists']);
+var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists','sticky']);
+
+requisitos_aulas.filter('capitalize', function() {
+    return function(input, all) {
+        return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
+    }
+});
 
 requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
 
-    $http.get('http://localhost/RequisitosAPI/titulaciones').
+    $http.get('http://donpisoalicante.com/TFGUA/titulaciones').
         success(function(data, status, headers, config) {
             $scope.titulaciones=data;
             angular.forEach(data,function(value, key) {
-                $http.get('http://localhost/RequisitosAPI/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
+                $http.get('http://donpisoalicante.com/TFGUA/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
                     success(function(data, status, headers, config) {
                         value.cursos=[];
                         curso1={nombre:"Primer Curso",asignaturas:[]};
                         curso2={nombre:"Segundo Curso",asignaturas:[]};
-                        curso3={nombre:"TercerCurso",asignaturas:[]};
+                        curso3={nombre:"Tercer Curso",asignaturas:[]};
                         curso4={nombre:"Cuarto Curso",asignaturas:[]};
 
-                        angular.forEach(data,function(value,key) {
-                            switch(value.CURSO) {
-                                case "1":     curso1.asignaturas.push(value);
+                        angular.forEach(data,function(asignatura,key) {
+                            switch(asignatura.CURSO) {
+                                case "1":     curso1.asignaturas.push(asignatura);
                                             break;
-                                case "2":     curso2.asignaturas.push(value);
+                                case "2":     curso2.asignaturas.push(asignatura);
                                             break;
-                                case "3":     curso3.asignaturas.push(value);
+                                case "3":     curso3.asignaturas.push(asignatura);
                                             break;
-                                case "4":     curso4.asignaturas.push(value);
+                                case "4":     curso4.asignaturas.push(asignatura);
                                             break;
-                                default:    curso4.asignaturas.push(value);
+                                default:    curso4.asignaturas.push(asignatura);
                                             break;
+
                             }
-                            value.recursosTeoria = [];
-                            value.recursosPract = [];
+                            asignatura.recursosTeoria = [];//fuera
+                            asignatura.recursosPract = [];//fuera
+                            asignatura.actividades = [];
+
+
+
+                            $http.get('http://donpisoalicante.com/TFGUA/asignaturas/'+asignatura.CODASI+'/actividades').
+                            success(function(data) {
+                                angular.forEach(data, function(actividad, key) {
+                                    actividad.lista=[]
+                                    asignatura.actividades.push(actividad);
+                                });
+                            });
                         });
 
                         value.cursos.push(curso1);
                         value.cursos.push(curso2);
                         value.cursos.push(curso3);
                         value.cursos.push(curso4);
-                        console.log(value);
                     });
 
 
             });
-
-
 
 
         }).
@@ -76,21 +91,16 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         console.log(recurso);
     };
 
-    $scope.onDragSuccess1=function(data,evt){
-        console.log("133","$scope","onDragSuccess1", "", evt);
-        var index = $scope.droppedObjects1.indexOf(data);
-        if (index > -1) {
-            $scope.droppedObjects1.splice(index, 1);
+    $scope.dropCallback = function(event, index, item, external, type, allowedType) {
+
+        console.log(item);
+       /* $scope.logListEvent('dropped at', event, index, external, type);
+        if (external) {
+            if (allowedType === 'itemType' && !item.label) return false;
+            if (allowedType === 'containerType' && !angular.isArray(item)) return false;
         }
-    }
-
-    $scope.onDropComplete1=function(data,evt){
-
-        console.log("entramos en drop complete"+data);
-        var index = $scope.droppedObjects1.indexOf(data);
-        if (index == -1)
-            $scope.droppedObjects1.push(data);
-    }
+        return item;*/
+    };
 
 
 });
