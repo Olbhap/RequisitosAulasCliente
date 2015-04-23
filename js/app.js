@@ -8,12 +8,13 @@ requisitos_aulas.filter('capitalize', function() {
 
 requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
+    var urlAPI = 'http://donpisoalicante.com/TFGUA/';
 
-    $http.get('http://donpisoalicante.com/TFGUA/titulaciones').
+    $http.get(urlAPI+'titulaciones').
         success(function(data, status, headers, config) {
             $scope.titulaciones=data;
             angular.forEach(data,function(value, key) {
-                $http.get('http://donpisoalicante.com/TFGUA/titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
+                $http.get(urlAPI+'titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
                     success(function(data, status, headers, config) {
                         value.cursos=[];
                         curso1={nombre:"Primer Curso",asignaturas:[]};
@@ -41,7 +42,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
 
 
 
-                            $http.get('http://donpisoalicante.com/TFGUA/asignaturas/'+asignatura.CODASI+'/actividades').
+                            $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividades').
                             success(function(data) {
                                 angular.forEach(data, function(actividad, key) {
                                     actividad.lista=[]
