@@ -59,6 +59,9 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
 
             });
 
+            console.log(data);
+
+
 
         }).
         error(function(data, status, headers, config) {
@@ -102,6 +105,105 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         return item;*/
     };
 
+    $scope.removeByCurso = function(codTit, nombreCurso){
+        console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit);
+        angular.forEach($scope.titulaciones,function(titulacion,key) {
+            if(titulacion.CODTIT == codTit)
+            {
+                angular.forEach(titulacion.cursos,function(curso,key)
+                {
+                    if(curso.nombre==nombreCurso)
+                    {
+                        angular.forEach(curso.asignaturas, function(asignatura,key)
+                        {
+                            angular.forEach(asignatura.actividades, function(actividad,key)
+                            {
+                                actividad.lista.length=0;
+                                //borrar en DB, llamada al APIRest
+                            });
+
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.removeByAsignatura = function(codTit, nombreCurso, codAsi){
+        console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit+" de la asignatura: "+codAsi);
+        angular.forEach($scope.titulaciones,function(titulacion,key) {
+            if(titulacion.CODTIT == codTit)
+            {
+                angular.forEach(titulacion.cursos,function(curso,key)
+                {
+                    if(curso.nombre==nombreCurso)
+                    {
+                        angular.forEach(curso.asignaturas, function(asignatura,key)
+                        {
+                            if(asignatura.CODASI==codAsi) {
+                                angular.forEach(asignatura.actividades, function (actividad, key) {
+                                    actividad.lista.length = 0;
+                                    //borrar en DB, llamada al APIRest
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.removeByActividad = function(codTit, nombreCurso, codAsi, codAct){
+        console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit+" de la asignatura: "+codAsi);
+        angular.forEach($scope.titulaciones,function(titulacion,key) {
+            if(titulacion.CODTIT == codTit)
+            {
+                angular.forEach(titulacion.cursos,function(curso,key)
+                {
+                    if(curso.nombre==nombreCurso)
+                    {
+                        angular.forEach(curso.asignaturas, function(asignatura,key)
+                        {
+                            if(asignatura.CODASI==codAsi) {
+                                angular.forEach(asignatura.actividades, function (actividad, key) {
+                                    if(actividad.CODACT==codAct) {
+                                        actividad.lista.length = 0;
+                                        //borrar en DB, llamada al APIRest
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.removeByRecurso = function(codTit, nombreCurso, codAsi, codAct, recurso){
+        console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit+" de la asignatura: "+codAsi);
+        angular.forEach($scope.titulaciones,function(titulacion,key) {
+            if(titulacion.CODTIT == codTit)
+            {
+                angular.forEach(titulacion.cursos,function(curso,key)
+                {
+                    if(curso.nombre==nombreCurso)
+                    {
+                        angular.forEach(curso.asignaturas, function(asignatura,key)
+                        {
+                            if(asignatura.CODASI==codAsi) {
+                                angular.forEach(asignatura.actividades, function (actividad, key) {
+                                    if(actividad.CODACT==codAct) {
+                                        actividad.lista.splice( actividad.lista.indexOf(recurso), 1 );
+                                        //borrar en DB, llamada al APIRest
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
 
 });
 

@@ -15,7 +15,7 @@
                         <h5> Recursos Específicos </h5>
                         <accordion close-others="oneAtATime" >
                             <accordion-group  is-open="status.open" ng-repeat="recurso in titu.listaRecursos" ng-click="titu.showListaRecursos(recurso)">
-                                <div class ="trashcan"dnd-list="[]">
+                                <div class ="trashcan" dnd-list="[]">
                                 <accordion-heading>
                                     {{recurso.tipo}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
@@ -48,7 +48,7 @@
 
                                     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
-                                <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByCurso(titulacion.CODTIT, curso.nombre)"  ><span aria-hidden="true">&times;</span></i>
                                 <div  ng-repeat="asignatura in curso.asignaturas">
                                         <table class="table table-bordered">
                                                 <thead>
@@ -56,7 +56,7 @@
                                                     <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}
                                                     </th>
                                                     <th>Recurso
-                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI)"  ><span aria-hidden="true">&times;</span></i>
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -65,13 +65,15 @@
                                                     <td>{{actividad.ACTIVIDAD | capitalize}}
                                                     </td>
                                                     <td dnd-list="actividad.lista">
-                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                        <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT)"
+                                                           aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                         <div class="btn btn-default" ng-repeat="tipoRecurso in actividad.lista"
                                                              dnd-draggable="tipoRecurso"
                                                              dnd-effect-allowed="move"
                                                              dnd-moved="actividad.lista.splice($index, 1)"
                                                              dnd-selected="models.selected = tipoRecurso">
-                                                            <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, tipoRecurso)"
+                                                               aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                             {{tipoRecurso.descripcion}}
                                                         </div>
                                                     </td>
