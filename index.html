@@ -38,27 +38,40 @@
                       <tabset type="pills">
                         <tab ng-repeat="titulacion in titulaciones" heading="{{titulacion.CODTIT}}" active="tab.active" disabled="tab.disabled">
                           <accordion id="accordionCustom" close-others="oneAtATime" >
+
+
                             <accordion-group is-open="status.open" ng-repeat="curso in titulacion.cursos">
+
                                 <accordion-heading>
-                                    {{curso.nombre}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+
+                                    {{curso.nombre}}
+
+                                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
+                                <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                 <div  ng-repeat="asignatura in curso.asignaturas">
                                         <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}</th>
-                                                    <th>Recurso</th>
+                                                    <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}
+                                                    </th>
+                                                    <th>Recurso
+                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-repeat="actividad in asignatura.actividades">
-                                                    <td>{{actividad.ACTIVIDAD | capitalize}}</td>
+                                                    <td>{{actividad.ACTIVIDAD | capitalize}}
+                                                    </td>
                                                     <td dnd-list="actividad.lista">
+                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                         <div class="btn btn-default" ng-repeat="tipoRecurso in actividad.lista"
                                                              dnd-draggable="tipoRecurso"
                                                              dnd-effect-allowed="move"
                                                              dnd-moved="actividad.lista.splice($index, 1)"
                                                              dnd-selected="models.selected = tipoRecurso">
+                                                            <i type="btn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                             {{tipoRecurso.descripcion}}
                                                         </div>
                                                     </td>

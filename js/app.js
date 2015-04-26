@@ -19,7 +19,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                         value.cursos=[];
                         curso1={nombre:"Primer Curso",asignaturas:[]};
                         curso2={nombre:"Segundo Curso",asignaturas:[]};
-                        curso3={nombre:"Tercer Cursilasdassdlo",asignaturas:[]};
+                        curso3={nombre:"Tercer Curso",asignaturas:[]};
                         curso4={nombre:"Cuarto Curso",asignaturas:[]};
 
                         angular.forEach(data,function(asignatura,key) {
@@ -34,7 +34,6 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                                             break;
                                 default:    curso4.asignaturas.push(asignatura);
                                             break;
-
                             }
                             asignatura.recursosTeoria = [];//fuera
                             asignatura.recursosPract = [];//fuera

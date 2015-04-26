@@ -103,3 +103,13 @@ body {
     margin-top: 5px;
 }
 
+.accordion-heading {
+    position:relative
+}
+
+.btn-save {
+    position:absolute;
+    right:2px;
+    top:2px;
+}
+
