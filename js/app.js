@@ -60,7 +60,8 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                             $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividades').
                             success(function(data) {
                                 angular.forEach(data, function(actividad, key) {
-                                    actividad.lista=[]
+                                    actividad.listaRecursos=[];
+                                    actividad.listaAulas=[];
                                     asignatura.actividades.push(actividad);
                                 });
                             });
