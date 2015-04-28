@@ -8,7 +8,23 @@ requisitos_aulas.filter('capitalize', function() {
 
 requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
-    var urlAPI = 'http://donpisoalicante.com/TFGUA/';
+    var urlAPI = 'http://localhost/RequisitosAPI/';
+    titu.tiposAulaCentralizadas=[];
+    titu.tiposAulaNoCentralizadas=[];
+    $http.get(urlAPI+'tiposAula').
+        success(function(data) {
+
+            angular.forEach(data, function(tipoAula, key) {
+                if(tipoAula.CENTRALIZADA=="S")
+                {
+                    titu.tiposAulaCentralizadas.push(tipoAula);
+                }
+                else
+                {
+                    titu.tiposAulaNoCentralizadas.push(tipoAula);
+                }
+            });
+        });
 
     $http.get(urlAPI+'titulaciones').
         success(function(data, status, headers, config) {

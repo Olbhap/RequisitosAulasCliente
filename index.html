@@ -15,7 +15,7 @@
                         <h5> Recursos Específicos </h5>
                         <accordion close-others="oneAtATime" >
                             <accordion-group  is-open="status.open" ng-repeat="recurso in titu.listaRecursos" ng-click="titu.showListaRecursos(recurso)">
-                                <div class ="trashcan" dnd-list="[]">
+
                                 <accordion-heading>
                                     {{recurso.tipo}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
@@ -26,11 +26,35 @@
                                          dnd-selected="models.selected = tipoRecurso">
                                         {{tipoRecurso.descripcion}}
                                     </div>
-
-                                </div>
                             </accordion-group>
                         </accordion>
 
+
+                        <h5> Gestión de Aulas </h5>
+                        <accordion close-others="oneAtATime" >
+                            <accordion-group  is-open="status.open" >
+                                <accordion-heading>
+                                    Aulas Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </accordion-heading>
+                                    <div class="btn btn-default" ng-repeat="aulaCentralizada in titu.tiposAulaCentralizadas"
+                                         dnd-draggable="tipoRecurso"
+                                         dnd-effect-allowed="copy"
+                                         dnd-selected="models.selected = aulaCentralizada">
+                                        {{aulaCentralizada.DESCRIP}}
+                                    </div>
+                            </accordion-group>
+                            <accordion-group  is-open="status.open" >
+                                <accordion-heading>
+                                    Aulas No Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </accordion-heading>
+                                    <div class="btn btn-default" ng-repeat="aulaNoCentralizada in titu.tiposAulaNoCentralizadas"
+                                         dnd-draggable="tipoRecurso"
+                                         dnd-effect-allowed="copy"
+                                         dnd-selected="models.selected = aulaNoCentralizada">
+                                        {{aulaNoCentralizada.DESCRIP}}
+                                    </div>
+                            </accordion-group>
+                        </accordion>
                     </div>
                 </div>
                 <div class="col-md-8 column">
@@ -77,7 +101,7 @@
                                                             {{tipoRecurso.descripcion}}
                                                         </div>
                                                     </td>
-
+    
                                                 </tr>
 
                                                 </tbody>
