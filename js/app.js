@@ -11,6 +11,14 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var urlAPI = 'http://donpisoalicante.com/TFGUA/';
     titu.tiposAulaCentralizadas=[];
     titu.tiposAulaNoCentralizadas=[];
+    $scope.tipoRecursoNombre="Recurso";
+    $scope.tipoAulaNombre="Aula";
+
+    $scope.allowedTypes1=["Recurso"];
+    $scope.allowedTypes2=["Aula"];
+
+
+
     $http.get(urlAPI+'tiposAula').
         success(function(data) {
 
@@ -92,6 +100,12 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     $scope.models = {
         selected: null,
         "B": []
+    };$scope.models2 = {
+        selected: null,
+        "B": []
+    };$scope.models3 = {
+        selected: null,
+        "B": []
     };
 
 
@@ -135,7 +149,9 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                         {
                             angular.forEach(asignatura.actividades, function(actividad,key)
                             {
-                                actividad.lista.length=0;
+
+                                    actividad.listaRecursos.length=0;
+                                    actividad.listaAulas.length=0;
                                 //borrar en DB, llamada al APIRest
                             });
 
@@ -146,7 +162,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         });
     };
 
-    $scope.removeByAsignatura = function(codTit, nombreCurso, codAsi){
+    $scope.removeByAsignatura = function(codTit, nombreCurso, codAsi, isRecurso){
         console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit+" de la asignatura: "+codAsi);
         angular.forEach($scope.titulaciones,function(titulacion,key) {
             if(titulacion.CODTIT == codTit)
@@ -159,7 +175,10 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                         {
                             if(asignatura.CODASI==codAsi) {
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
-                                    actividad.lista.length = 0;
+                                    if(isRecurso)
+                                        actividad.listaRecursos.length=0;
+                                    else
+                                        actividad.listaAulas.length=0;
                                     //borrar en DB, llamada al APIRest
                                 });
                             }
@@ -170,7 +189,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         });
     };
 
-    $scope.removeByActividad = function(codTit, nombreCurso, codAsi, codAct){
+    $scope.removeByActividad = function(codTit, nombreCurso, codAsi, codAct, isRecurso){
         console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit+" de la asignatura: "+codAsi);
         angular.forEach($scope.titulaciones,function(titulacion,key) {
             if(titulacion.CODTIT == codTit)
@@ -184,7 +203,10 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                             if(asignatura.CODASI==codAsi) {
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
                                     if(actividad.CODACT==codAct) {
-                                        actividad.lista.length = 0;
+                                        if(isRecurso)
+                                            actividad.listaRecursos.length=0;
+                                        else
+                                            actividad.listaAulas.length=0;
                                         //borrar en DB, llamada al APIRest
                                     }
                                 });
@@ -196,7 +218,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         });
     };
 
-    $scope.removeByRecurso = function(codTit, nombreCurso, codAsi, codAct, recurso){
+    $scope.removeByRecurso = function(codTit, nombreCurso, codAsi, codAct, isRecurso,recurso){
         console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit+" de la asignatura: "+codAsi);
         angular.forEach($scope.titulaciones,function(titulacion,key) {
             if(titulacion.CODTIT == codTit)
@@ -210,7 +232,10 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                             if(asignatura.CODASI==codAsi) {
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
                                     if(actividad.CODACT==codAct) {
-                                        actividad.lista.splice( actividad.lista.indexOf(recurso), 1 );
+                                        if(isRecurso)
+                                            actividad.listaRecursos.splice( actividad.listaRecursos.indexOf(recurso), 1 );
+                                        else
+                                            actividad.listaAulas.splice( actividad.listaRecursos.indexOf(recurso), 1 );
                                         //borrar en DB, llamada al APIRest
                                     }
                                 });

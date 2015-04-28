@@ -23,7 +23,8 @@
                                     <div class="btn btn-default" ng-repeat="tipoRecurso in recurso.recursos"
                                          dnd-draggable="tipoRecurso"
                                          dnd-effect-allowed="copy"
-                                         dnd-selected="models.selected = tipoRecurso">
+                                         dnd-type="tipoRecursoNombre"
+                                         >
                                         {{tipoRecurso.descripcion}}
                                     </div>
                             </accordion-group>
@@ -36,22 +37,24 @@
                                 <accordion-heading>
                                     Aulas Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
-                                    <div class="btn btn-default" ng-repeat="aulaCentralizada in titu.tiposAulaCentralizadas"
-                                         dnd-draggable="tipoAula"
+                                    <div class="btn btn-default" ng-repeat="aula in titu.tiposAulaCentralizadas"
+                                         dnd-draggable="aula"
                                          dnd-effect-allowed="copy"
-                                         dnd-selected="models.selected = tipoAula">
-                                        {{aulaCentralizada.DESCRIP}}
+                                         dnd-type="tipoAulaNombre"
+                                         >
+                                        {{aula.DESCRIP}}
                                     </div>
                             </accordion-group>
                             <accordion-group  is-open="status.open" >
                                 <accordion-heading>
                                     Aulas No Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
-                                    <div class="btn btn-default" ng-repeat="aulaNoCentralizada in titu.tiposAulaNoCentralizadas"
-                                         dnd-draggable="tipoAula"
+                                    <div class="btn btn-default" ng-repeat="aula in titu.tiposAulaNoCentralizadas"
+                                         dnd-draggable="aula"
                                          dnd-effect-allowed="copy"
-                                         dnd-selected="models.selected = tipoAula">
-                                        {{aulaNoCentralizada.DESCRIP}}
+                                         dnd-type="tipoAulaNombre"
+                                         >
+                                        {{aula.DESCRIP}}
                                     </div>
                             </accordion-group>
                         </accordion>
@@ -80,7 +83,10 @@
                                                     <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}
                                                     </th>
                                                     <th>Recurso
-                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI)"  ><span aria-hidden="true">&times;</span></i>
+                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, true)"  ><span aria-hidden="true">&times;</span></i>
+                                                    </th>
+                                                    <th>Aulas
+                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, false)"  ><span aria-hidden="true">&times;</span></i>
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -88,26 +94,38 @@
                                                 <tr ng-repeat="actividad in asignatura.actividades">
                                                     <td>{{actividad.ACTIVIDAD | capitalize}}
                                                     </td>
-                                                    <td dnd-list="actividad.listaRecursos">
-                                                        <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT)"
+
+                                                    <td dnd-list="actividad.listaRecursos"
+                                                        dnd-allowed-types="allowedTypes1">
+
+                                                        <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true)"
                                                            aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                         <div class="btn btn-default" ng-repeat="tipoRecurso in actividad.listaRecursos"
                                                              dnd-draggable="tipoRecurso"
                                                              dnd-effect-allowed="move"
+                                                             dnd-type="tipoRecursoNombre"
                                                              dnd-moved="actividad.listaRecursos.splice($index, 1)"
-                                                             dnd-selected="models.selected = tipoRecurso">
-                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, tipoRecurso)"
+                                                             >
+                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true, tipoRecurso)"
                                                                aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                             {{tipoRecurso.descripcion}}
                                                         </div>
-                                                        <div class="btn btn-default" ng-repeat="tipoAula in actividad.listaAulas"
-                                                             dnd-draggable="tipoAula"
+                                                    </td>
+
+                                                    <td dnd-list="actividad.listaAulas"
+                                                        dnd-allowed-types="allowedTypes2">
+                                                        <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
+                                                           aria-label="Close"><span aria-hidden="true">&times;</span></i>
+
+                                                        <div class="btn btn-default" ng-repeat="aula in actividad.listaAulas"
+                                                             dnd-draggable="aula"
+                                                             dnd-type="tipoAulaNombre"
                                                              dnd-effect-allowed="move"
-                                                             dnd-moved="actividad.listaRecursos.splice($index, 1)"
-                                                             dnd-selected="models.selected = tipoAula">
-                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, tipoAula)"
+                                                             dnd-moved="actividad.listaAulas.splice($index, 1)"
+                                                             >
+                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false, aula)"
                                                                aria-label="Close"><span aria-hidden="true">&times;</span></i>
-                                                            {{tipoAula.DESCRIP}}
+                                                            {{aula.DESCRIP}}
                                                         </div>
                                                     </td>
     
