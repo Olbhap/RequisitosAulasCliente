@@ -8,7 +8,7 @@ requisitos_aulas.filter('capitalize', function() {
 
 requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
-    var urlAPI = 'http://localhost/RequisitosAPI/';
+    var urlAPI = 'http://donpisoalicante.com/TFGUA/';
     titu.tiposAulaCentralizadas=[];
     titu.tiposAulaNoCentralizadas=[];
     $http.get(urlAPI+'tiposAula').
