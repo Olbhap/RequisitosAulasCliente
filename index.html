@@ -82,11 +82,11 @@
                                                 <tr>
                                                     <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}
                                                     </th>
-                                                    <th>Recurso
-                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, true)"  ><span aria-hidden="true">&times;</span></i>
+                                                    <th ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">Recurso
+                                                        <i ng-show="hoverEdit" type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, true)"  ><span aria-hidden="true">&times;</span></i>
                                                     </th>
-                                                    <th>Aulas
-                                                        <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, false)"  ><span aria-hidden="true">&times;</span></i>
+                                                    <th ng-mouseover="hoverEdit2 = true" ng-mouseleave="hoverEdit2 = false">Aulas
+                                                        <i ng-show="hoverEdit2" type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, false)"  ><span aria-hidden="true">&times;</span></i>
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -96,7 +96,8 @@
                                                     </td>
 
                                                     <td dnd-list="actividad.listaRecursos"
-                                                        dnd-allowed-types="allowedTypes1">
+                                                        dnd-allowed-types="allowedTypes1"
+                                                        dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
 
                                                         <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true)"
                                                            aria-label="Close"><span aria-hidden="true">&times;</span></i>
@@ -113,7 +114,8 @@
                                                     </td>
 
                                                     <td dnd-list="actividad.listaAulas"
-                                                        dnd-allowed-types="allowedTypes2">
+                                                        dnd-allowed-types="allowedTypes2"
+                                                        dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
                                                         <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
                                                            aria-label="Close"><span aria-hidden="true">&times;</span></i>
 

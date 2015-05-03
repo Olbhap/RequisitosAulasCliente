@@ -135,6 +135,15 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         }
         return item;*/
     };
+    $scope.dropRecurso = function(codtit, curso, codasi, codact, item, type) {
+        if(type=="Recurso")
+            console.log(item.descripcion+", "+codtit+", "+codasi+", "+codact+", "+type);
+        else
+            console.log(item.TIPOAULAVOAP+", "+codtit+", "+codasi+", "+codact+", "+type);
+
+        return item;
+
+    };
 
     $scope.removeByCurso = function(codTit, nombreCurso){
         console.log("Eliminados todos los recursos del curso: "+nombreCurso+ " de la titulación: "+codTit);
