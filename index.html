@@ -75,7 +75,7 @@
 
                                     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                                 </accordion-heading>
-                                <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByCurso(titulacion.CODTIT, curso.nombre)"  ><span aria-hidden="true">&times;</span></i>
+                                <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByCurso(titulacion.CODTIT, curso.nombre)" ><span aria-hidden="true">&times;</span></i>
                                 <div  ng-repeat="asignatura in curso.asignaturas">
                                         <table class="table table-bordered">
                                                 <thead>
@@ -95,37 +95,44 @@
                                                     <td>{{actividad.ACTIVIDAD | capitalize}}
                                                     </td>
 
-                                                    <td dnd-list="actividad.listaRecursos"
+                                                    <td  ng-mouseover="hoverEdit3 = true" ng-mouseleave="hoverEdit3 = false"
+                                                            dnd-list="actividad.listaRecursos"
                                                         dnd-allowed-types="allowedTypes1"
                                                         dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
 
-                                                        <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true)"
+                                                        <i ng-show="hoverEdit3" type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true)"
                                                            aria-label="Close"><span aria-hidden="true">&times;</span></i>
-                                                        <div class="btn btn-default" ng-repeat="tipoRecurso in actividad.listaRecursos"
+                                                        <div ng-mouseover="hoverEdit4 = true" ng-mouseleave="hoverEdit4 = false"
+                                                                class="btn btn-default" ng-repeat="tipoRecurso in actividad.listaRecursos"
                                                              dnd-draggable="tipoRecurso"
                                                              dnd-effect-allowed="move"
                                                              dnd-type="tipoRecursoNombre"
                                                              dnd-moved="actividad.listaRecursos.splice($index, 1)"
                                                              >
-                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true, tipoRecurso)"
+                                                            <i   ng-show="hoverEdit4" type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true, tipoRecurso)"
                                                                aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                             {{tipoRecurso.descripcion}}
                                                         </div>
                                                     </td>
 
-                                                    <td dnd-list="actividad.listaAulas"
+                                                    <td ng-mouseover="hoverEdit5 = true" ng-mouseleave="hoverEdit5 = false"
+                                                            dnd-list="actividad.listaAulas"
                                                         dnd-allowed-types="allowedTypes2"
                                                         dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
-                                                        <i type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
+                                                        <i ng-show="hoverEdit5" type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
                                                            aria-label="Close"><span aria-hidden="true">&times;</span></i>
 
-                                                        <div class="btn btn-default" ng-repeat="aula in actividad.listaAulas"
+                                                        <div
+                                                                ng-mouseover="hoverEdit6 = true" ng-mouseleave="hoverEdit6 = false"
+                                                                class="btn btn-default" ng-repeat="aula in actividad.listaAulas"
                                                              dnd-draggable="aula"
                                                              dnd-type="tipoAulaNombre"
                                                              dnd-effect-allowed="move"
                                                              dnd-moved="actividad.listaAulas.splice($index, 1)"
                                                              >
-                                                            <i type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false, aula)"
+                                                            <i
+                                                                    ng-show="hoverEdit6"
+                                                                    type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false, aula)"
                                                                aria-label="Close"><span aria-hidden="true">&times;</span></i>
                                                             {{aula.DESCRIP}}
                                                         </div>
