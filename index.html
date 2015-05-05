@@ -94,10 +94,10 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-repeat="actividad in asignatura.actividades">
-                                                    <td>{{actividad.ACTIVIDAD | capitalize}}
+                                                    <td >{{actividad.ACTIVIDAD | capitalize}}
                                                     </td>
 
-                                                    <td  ng-mouseover="hoverEdit3 = actividad.listaRecursos.length" ng-mouseleave="hoverEdit3 = false"
+                                                    <td class="col-md-4" ng-mouseover="hoverEdit3 = actividad.listaRecursos.length" ng-mouseleave="hoverEdit3 = false"
                                                             dnd-list="actividad.listaRecursos"
                                                         dnd-allowed-types="allowedTypes1"
                                                         dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
@@ -117,7 +117,8 @@
                                                         </div>
                                                     </td>
 
-                                                    <td ng-mouseover="hoverEdit5 = actividad.listaAulas.length" ng-mouseleave="hoverEdit5 = false"
+                                                    <td class="col-md-4" 
+                                                    ng-mouseover="hoverEdit5 = actividad.listaAulas.length" ng-mouseleave="hoverEdit5 = false"
                                                             dnd-list="actividad.listaAulas"
                                                         dnd-allowed-types="allowedTypes2"
                                                         dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
