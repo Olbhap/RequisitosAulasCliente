@@ -16,8 +16,10 @@
                         <h5> Gestión de Aulas </h5>
                         <accordion close-others="oneAtATime" >
                             <accordion-group  is-open="status.open" >
-                                <accordion-heading>
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
                                     Aulas Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </div>
                                 </accordion-heading>
                                     <div class="btn btn-default" ng-repeat="aula in titu.tiposAulaCentralizadas"
                                          dnd-draggable="aula"
@@ -28,8 +30,10 @@
                                     </div>
                             </accordion-group>
                             <accordion-group  is-open="status.open" >
-                                <accordion-heading>
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
                                     Aulas No Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </div>
                                 </accordion-heading>
                                     <div class="btn btn-default" ng-repeat="aula in titu.tiposAulaNoCentralizadas"
                                          dnd-draggable="aula"
@@ -46,8 +50,10 @@
                         <accordion close-others="oneAtATime" >
                             <accordion-group  is-open="status.open" ng-repeat="recurso in titu.listaRecursos" ng-click="titu.showListaRecursos(recurso)">
 
-                                <accordion-heading>
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
                                     {{recurso.tipo}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    </div>
                                 </accordion-heading>
 
                                 <div class="btn btn-default" ng-repeat="tipoRecurso in recurso.recursos"
@@ -71,11 +77,13 @@
 
                             <accordion-group is-open="status.open" ng-repeat="curso in titulacion.cursos">
 
-                                <accordion-heading>
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
 
                                     {{curso.nombre}}
 
                                     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    </div>
                                 </accordion-heading>
                                 <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByCurso(titulacion.CODTIT, curso.nombre)" ><span aria-hidden="true">&times;</span></i>
                                 <div  ng-repeat="asignatura in curso.asignaturas">
