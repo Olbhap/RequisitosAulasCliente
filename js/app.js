@@ -8,7 +8,7 @@ requisitos_aulas.filter('capitalize', function() {
 
 requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     var titu = this
-    var urlAPI = 'http://donpisoalicante.com/TFGUA/';
+    var urlAPI = 'http://localhost/requisitosAPI/';
     titu.tiposAulaCentralizadas=[];
     titu.tiposAulaNoCentralizadas=[];
     $scope.tipoRecursoNombre="Recurso";
@@ -19,20 +19,19 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
 
 
 
-    $http.get(urlAPI+'tiposAula').
+    $http.get(urlAPI+'tiposAulaCentralizadas').
         success(function(data) {
-
             angular.forEach(data, function(tipoAula, key) {
-                if(tipoAula.CENTRALIZADA=="S")
-                {
                     titu.tiposAulaCentralizadas.push(tipoAula);
-                }
-                else
-                {
-                    titu.tiposAulaNoCentralizadas.push(tipoAula);
-                }
             });
         });
+
+    $http.get(urlAPI+'tiposAulaNoCentralizadas').
+    success(function(data) {
+        angular.forEach(data, function(tipoAula, key) {
+                titu.tiposAulaNoCentralizadas.push(tipoAula);
+        });
+    });
 
     $http.get(urlAPI+'titulaciones').
         success(function(data, status, headers, config) {
@@ -137,9 +136,27 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
     };
     $scope.dropRecurso = function(codtit, curso, codasi, codact, item, type) {
         if(type=="Recurso")
-            console.log(item.descripcion+", "+codtit+", "+codasi+", "+codact+", "+type);
-        else
-            console.log(item.TIPOAULAVOAP+", "+codtit+", "+codasi+", "+codact+", "+type);
+            console.log("Recurso: "+item.descripcion+", "+codtit+", "+codasi+", "+codact+", "+type);
+        else {
+            item.codtit=codtit;
+            item.curso=curso;
+            item.codasi=codasi;
+            item.codact = codact;
+            jObject = JSON.stringify(item);
+            $http.post(urlAPI+'asignarTipoAulaAsignatura',jObject).
+                then(function(response) {
+
+
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    console.log("SUCCESS   ->" + response.data);
+                }, function(response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.log("ERROR")
+                });
+            console.log(item.TIPOAULA + ", " + codtit + ", " + codasi + ", " + codact + ", " + type + ",CURSO: " + curso);
+        }
 
         return item;
 
@@ -158,7 +175,6 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                         {
                             angular.forEach(asignatura.actividades, function(actividad,key)
                             {
-
                                     actividad.listaRecursos.length=0;
                                     actividad.listaAulas.length=0;
                                 //borrar en DB, llamada al APIRest
