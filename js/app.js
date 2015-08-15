@@ -67,9 +67,23 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                             $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividades').
                             success(function(data) {
                                 angular.forEach(data, function(actividad, key) {
+
                                     actividad.listaRecursos=[];
                                     actividad.listaAulas=[];
                                     asignatura.actividades.push(actividad);
+                                    $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividad/'+actividad.CODACT+'/curso/2014-2015'+'/aulasCentralizadas').
+                                        success(function(data) {
+                                            angular.forEach(data, function(aulaCentralizada, key) {
+                                                actividad.listaAulas.push(aulaCentralizada);
+
+                                            });
+                                        });
+                                    $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividad/'+actividad.CODACT+'/curso/2014-2015'+'/aulasNoCentralizadas').
+                                        success(function(data) {
+                                            angular.forEach(data, function(aulaNoCentralizada, key) {
+                                                actividad.listaAulas.push(aulaNoCentralizada);
+                                            });
+                                        });
                                 });
                             });
                         });
@@ -124,6 +138,11 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         console.log(recurso);
     };
 
+
+    $scope.$on('$viewContentLoaded', function(){
+        console.log("WEB LOADED");
+    });
+
     $scope.dropCallback = function(event, index, item, external, type, allowedType) {
 
         console.log(item);
@@ -139,10 +158,11 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
             console.log("Recurso: "+item.descripcion+", "+codtit+", "+codasi+", "+codact+", "+type);
         else {
             item.codtit=codtit;
-            item.curso=curso;
+            item.curso="2014-2015";
             item.codasi=codasi;
             item.codact = codact;
             jObject = JSON.stringify(item);
+            console.log(jObject);
             $http.post(urlAPI+'asignarTipoAulaAsignatura',jObject).
                 then(function(response) {
 
