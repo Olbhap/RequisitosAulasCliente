@@ -27,7 +27,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.884615">
+            <state vertical-scroll-proportion="-12.807693">
               <caret line="129" column="90" selection-start-line="129" selection-start-column="80" selection-end-line="129" selection-end-column="90" />
               <folding />
             </state>
@@ -47,8 +47,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.719923">
-              <caret line="83" column="68" selection-start-line="83" selection-start-column="68" selection-end-line="83" selection-end-column="68" />
+            <state vertical-scroll-proportion="1.694899">
+              <caret line="288" column="71" selection-start-line="288" selection-start-column="71" selection-end-line="288" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -110,6 +110,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -158,7 +159,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -370,7 +370,13 @@
       <option name="project" value="LOCAL" />
       <updated>1439491157394</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Cargamos los tipoAula.&#10;TODO hay que hacer que la carga sea más dinámica.&#10;TODO añadir mensaje &quot;loading&quot; mientras tanto">
+      <created>1439661555702</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1439661555702</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -429,7 +435,8 @@
     <MESSAGE value="Solo aparecerá (De momento por actividad) el botón de borrar si la lista no es vacia." />
     <MESSAGE value="Invertidos el orden de gestión de aulas y recursos específicos." />
     <MESSAGE value="POST a tiposAula" />
-    <option name="LAST_COMMIT_MESSAGE" value="POST a tiposAula" />
+    <MESSAGE value="Cargamos los tipoAula.&#10;TODO hay que hacer que la carga sea más dinámica.&#10;TODO añadir mensaje &quot;loading&quot; mientras tanto" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cargamos los tipoAula.&#10;TODO hay que hacer que la carga sea más dinámica.&#10;TODO añadir mensaje &quot;loading&quot; mientras tanto" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -827,7 +834,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.884615">
+        <state vertical-scroll-proportion="-12.807693">
           <caret line="129" column="90" selection-start-line="129" selection-start-column="80" selection-end-line="129" selection-end-column="90" />
           <folding />
         </state>
@@ -835,8 +842,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.719923">
-          <caret line="83" column="68" selection-start-line="83" selection-start-column="68" selection-end-line="83" selection-end-column="68" />
+        <state vertical-scroll-proportion="1.694899">
+          <caret line="288" column="71" selection-start-line="288" selection-start-column="71" selection-end-line="288" selection-end-column="71" />
           <folding />
         </state>
       </provider>

@@ -277,11 +277,22 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                             if(asignatura.CODASI==codAsi) {
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
                                     if(actividad.CODACT==codAct) {
-                                        if(isRecurso)
+                                        if(isRecurso) {
                                             actividad.listaRecursos.splice( actividad.listaRecursos.indexOf(recurso), 1 );
-                                        else
+                                        }
+                                        else {
                                             actividad.listaAulas.splice( actividad.listaRecursos.indexOf(recurso), 1 );
-                                        //borrar en DB, llamada al APIRest
+                                            console.log("DELETE: "+urlAPI+'asignaturas/'+codAsi+'/actividad/'+codAct+'/curso/2014-2015'+'/tipoAula/'+recurso.CODTIPOAULA);
+                                            $http.delete(urlAPI+'asignaturas/'+codAsi+'/actividad/'+codAct+'/curso/2014-2015'+'/tipoAula/'+recurso.CODTIPOAULA).
+                                                then(function(response) {
+                                                    console.log('DELETE: \n'+response.data)
+                                                }, function(response) {
+                                                    // called asynchronously if an error occurs
+                                                    // or server returns response with an error status.
+                                                });
+                                        }
+
+                                        //borrar en DB, llamada al APIRest /asignaturas/(\d+)/actividad/(\d+)/curso/(.+)/tipoAula/(\d+)
                                     }
                                 });
                             }
