@@ -117,3 +117,27 @@ body {
     color:red;
 }
 
+.splash {
+    display: none;
+}
+
+[ng-cloak].splash {
+    display: block !important;
+}
+
+.splash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width:100%;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+    background: #000;
+}
+
+.splash h2 {
+    text-align: center;
+    font-size: 4em;
+    color:white;
+}

@@ -1,4 +1,4 @@
-var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists','sticky']);
+var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists','sticky', 'angularSpinner']);
 
 requisitos_aulas.filter('capitalize', function() {
     return function(input, all) {
@@ -6,9 +6,9 @@ requisitos_aulas.filter('capitalize', function() {
     }
 });
 
-requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
-    var titu = this
-    var urlAPI = 'http://localhost/requisitosAPI/';
+requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinnerService','$q',function ($scope, $http,usSpinnerService, $q) {
+    var titu = this;
+    var urlAPI = 'http://http://donpisoalicante.com/TFGUA/';
     titu.tiposAulaCentralizadas=[];
     titu.tiposAulaNoCentralizadas=[];
     $scope.tipoRecursoNombre="Recurso";
@@ -16,8 +16,6 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
 
     $scope.allowedTypes1=["Recurso"];
     $scope.allowedTypes2=["Aula"];
-
-
 
     $http.get(urlAPI+'tiposAulaCentralizadas').
         success(function(data) {
@@ -37,6 +35,7 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         success(function(data, status, headers, config) {
             $scope.titulaciones=data;
             angular.forEach(data,function(value, key) {
+
                 $http.get(urlAPI+'titulaciones/'+value.CODPLA+'/curso/2014/asignaturas').
                     success(function(data, status, headers, config) {
                         value.cursos=[];
@@ -85,6 +84,9 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                                             });
                                         });
                                 });
+                                    $q.all(data).then(function () {
+                                        console.log("wtf?");
+                                    })
                             });
                         });
 
@@ -94,11 +96,9 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
                         value.cursos.push(curso4);
                     });
 
-
             });
 
             console.log(data);
-
 
 
         }).
@@ -294,8 +294,10 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
 
                                         //borrar en DB, llamada al APIRest /asignaturas/(\d+)/actividad/(\d+)/curso/(.+)/tipoAula/(\d+)
                                     }
-                                });
-                            }
+                                }
+
+                                );
+                            } console.log("terminamos");
                         });
                     }
                 });
@@ -303,15 +305,37 @@ requisitos_aulas.controller("controllerTitulaciones",function ($scope, $http) {
         });
     };
 
-});
+}]);
 
 requisitos_aulas.controller('TabsDemoCtrl', function ($scope, $window) {
 
 });
 
 
+requisitos_aulas.factory('spinnerInterceptor', ['usSpinnerService', function(usSpinnerService) {
+    return  {
+        request: function(config) {
 
-requisitos_aulas.controller('AlertDemoCtrl', function ($scope) {
+            return config;
+        },
+        response:function(config){
+            return config;
+        },
+        responseError:function(config){
+            return config;
+        }
+    };
+}]);
+
+requisitos_aulas.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('spinnerInterceptor');
+}]);
+//spinner configuration END
+
+
+
+
+    requisitos_aulas.controller('AlertDemoCtrl', function ($scope) {
     $scope.alerts = [
         { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
         { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
