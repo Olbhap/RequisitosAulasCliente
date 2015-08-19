@@ -132,8 +132,8 @@
 
                                                     <td class="col-md-4" 
                                                     ng-mouseover="hoverEdit5 = actividad.listaAulas.length" ng-mouseleave="hoverEdit5 = false"
-                                                            dnd-list="actividad.listaAulas"
-                                                        dnd-disable-if="actividad.listaAulas.length >= 1">
+                                                        dnd-list="actividad.listaAulas"
+                                                        dnd-disable-if="actividad.listaAulas.length >= 1"
                                                         dnd-allowed-types="allowedTypes2"
                                                         dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
                                                         <i ng-show="hoverEdit5" type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
