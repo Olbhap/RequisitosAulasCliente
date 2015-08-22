@@ -9,6 +9,7 @@ requisitos_aulas.filter('capitalize', function() {
 requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinnerService','$q',function ($scope, $http,usSpinnerService, $q) {
     var titu = this;
     var urlAPI = 'http://donpisoalicante.com/TFGUA/';
+    //var urlAPI = 'http://localhost/RequisitosAPI/';
     titu.tiposAulaCentralizadas=[];
     titu.tiposAulaNoCentralizadas=[];
     $scope.tipoRecursoNombre="Recurso";
@@ -222,9 +223,17 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
                                     if(isRecurso)
                                         actividad.listaRecursos.length=0;
-                                    else
-                                        actividad.listaAulas.length=0;
-                                    //borrar en DB, llamada al APIRest
+                                    else {
+                                        actividad.listaAulas.length = 0;
+                                        console.log("DELETE: " + urlAPI + 'asignaturas/' + codAsi + '/curso/2014-2015' + '/tipoAula/');
+                                        $http.delete(urlAPI + 'asignaturas/' + codAsi + '/curso/2014-2015' + '/tipoAula/').
+                                            then(function (response) {
+                                                console.log('DELETE: \n' + response.data)
+                                            }, function (response) {
+                                                // called asynchronously if an error occurs
+                                                // or server returns response with an error status.
+                                            });
+                                    }
                                 });
                             }
                         });
@@ -250,8 +259,12 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                                     if(actividad.CODACT==codAct) {
                                         if(isRecurso)
                                             actividad.listaRecursos.length=0;
-                                        else
+                                        else {
+                                           // /asignaturas/(\d+)/curso/(.+)/tipoAula/
                                             actividad.listaAulas.length=0;
+
+                                        }
+
                                         //borrar en DB, llamada al APIRest
                                     }
                                 });
@@ -281,7 +294,7 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                                             actividad.listaRecursos.splice( actividad.listaRecursos.indexOf(recurso), 1 );
                                         }
                                         else {
-                                            actividad.listaAulas.splice( actividad.listaRecursos.indexOf(recurso), 1 );
+                                            actividad.listaAulas.splice( actividad.listaAulas.indexOf(recurso), 1 );
                                             console.log("DELETE: "+urlAPI+'asignaturas/'+codAsi+'/actividad/'+codAct+'/curso/2014-2015'+'/tipoAula/'+recurso.CODTIPOAULA);
                                             $http.delete(urlAPI+'asignaturas/'+codAsi+'/actividad/'+codAct+'/curso/2014-2015'+'/tipoAula/'+recurso.CODTIPOAULA).
                                                 then(function(response) {
@@ -292,7 +305,6 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                                                 });
                                         }
 
-                                        //borrar en DB, llamada al APIRest /asignaturas/(\d+)/actividad/(\d+)/curso/(.+)/tipoAula/(\d+)
                                     }
                                 }
 
@@ -315,13 +327,15 @@ requisitos_aulas.controller('TabsDemoCtrl', function ($scope, $window) {
 requisitos_aulas.factory('spinnerInterceptor', ['usSpinnerService', function(usSpinnerService) {
     return  {
         request: function(config) {
-
+            usSpinnerService.spin('spinner-1');
             return config;
         },
         response:function(config){
+            usSpinnerService.stop('spinner-1');
             return config;
         },
         responseError:function(config){
+            usSpinnerService.stop('spinner-1');
             return config;
         }
     };

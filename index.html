@@ -11,7 +11,6 @@
 
     <div ng-controller="controllerTitulaciones as titu" ng-cloak="">
         <!-- The splash screen must be first -->
-        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
     <div class="row clearfix">
         <div class="col-md-12 column" >
             <div class="row clearfix">
@@ -138,6 +137,7 @@
                                                         dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
                                                         <i ng-show="hoverEdit5" type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
                                                            aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
 
                                                         <div
                                                                 ng-mouseover="hoverEdit6 = true" ng-mouseleave="hoverEdit6 = false"
