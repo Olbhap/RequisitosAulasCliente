@@ -324,22 +324,19 @@ requisitos_aulas.controller('TabsDemoCtrl', function ($scope, $window) {
 });
 
 
-/*requisitos_aulas.factory('spinnerInterceptor', ['usSpinnerService', function(usSpinnerService) {
+requisitos_aulas.factory('spinnerInterceptor', ['usSpinnerService', function(usSpinnerService) {
     return  {
         request: function(config) {
-            usSpinnerService.spin('spinner-1');
             return config;
         },
         response:function(config){
-            usSpinnerService.stop('spinner-1');
             return config;
         },
         responseError:function(config){
-            usSpinnerService.stop('spinner-1');
             return config;
         }
     };
-}]);*/
+}]);
 
 requisitos_aulas.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('spinnerInterceptor');
