@@ -124,19 +124,46 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
 
 
     titu.lista = [{nombre:"Grado Ingeniería Informática", acro:"GII", cursos: titu.CursosGII},{nombre:"Grado Ingeniería Multimedia", acro:"GIM"}];
-    titu.recursosAula = [{descripcion:"Mesa de dibujo avatible"},{descripcion:"Mesa de dibujo plana"},{descripcion:"Pizarra doble"}];
+
+    /*titu.recursosAula = [{descripcion:"Mesa de dibujo avatible"},{descripcion:"Mesa de dibujo plana"},{descripcion:"Pizarra doble"}];
     titu.recursosHardware = [{descripcion:"Proyector"},{descripcion:"Ordenadores 4GB RAM"}];
     titu.listaRecursos = [{tipo: "Aula", recursos: titu.recursosAula},
         {tipo:"Hardware", recursos: titu.recursosHardware},
-        {tipo:"Software"}];
+        {tipo:"Software"}];*/
+    titu.listaRecursos=[]; //Inicializamos la lista de recursos
 
-
+    $http.get(urlAPI+'tiposrecursosdocentes').
+        success(function(data) {
+            angular.forEach(data, function(tipoRecurso, key) {
+                posLista = titu.indiceDeCategoriaRecurso(titu.listaRecursos,tipoRecurso.CATDESCRIP);
+                if(posLista==-1) {
+                    listaRecurso = {tipo: tipoRecurso.CATDESCRIP, recursos: []};
+                    listaRecurso.recursos.push(tipoRecurso);
+                    titu.listaRecursos.push(listaRecurso);
+                }
+                else {
+                    titu.listaRecursos[posLista].recursos.push(tipoRecurso);
+                }
+            });
+        });
 
     titu.showTitu = function (titulacion) {
         console.log(titulacion);
     };
     titu.showListaRecursos = function (recurso) {
         console.log(recurso);
+    };
+
+    titu.indiceDeCategoriaRecurso = function(listaRecursos, recurso) {
+        if(listaRecursos.length == 0)
+            return -1;
+
+        for(var i = 0; i < listaRecursos.length; i++) {
+            if(listaRecursos[i]["tipo"] == recurso)
+                return i;
+        }
+        return -1;
+
     };
 
 
