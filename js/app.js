@@ -8,8 +8,8 @@ requisitos_aulas.filter('capitalize', function() {
 
 requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinnerService','$q',function ($scope, $http,usSpinnerService, $q) {
     var titu = this;
-    var urlAPI = 'http://donpisoalicante.com/TFGUA/';
-    //var urlAPI = 'http://localhost/RequisitosAPI/';
+    //var urlAPI = 'http://donpisoalicante.com/TFGUA/';
+    var urlAPI = 'http://localhost/RequisitosAPI/';
     titu.tiposAulaCentralizadas=[];
     titu.tiposAulaNoCentralizadas=[];
     $scope.tipoRecursoNombre="Recurso";
@@ -182,8 +182,27 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
         return item;*/
     };
     $scope.dropRecurso = function(codtit, curso, codasi, codact, item, type) {
-        if(type=="Recurso")
-            console.log("Recurso: "+item.descripcion+", "+codtit+", "+codasi+", "+codact+", "+type);
+        if(type=="Recurso") {
+            item.codtit = codtit;
+            item.curso = "2014-2015";
+            item.codasi = codasi;
+            item.codact = codact;
+            jObject = JSON.stringify(item);
+            console.log(jObject);
+            $http.post(urlAPI + 'asignarRecursoDocente', jObject).
+                then(function (response) {
+
+
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    console.log("SUCCESS   ->" + response.data);
+                }, function (response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.log("ERROR")
+                });
+            console.log("Recurso: " + item.descripcion + ", " + codtit + ", " + codasi + ", " + codact + ", " + type);
+        }
         else {
             item.codtit=codtit;
             item.curso="2014-2015";
