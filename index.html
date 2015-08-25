@@ -6,27 +6,66 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 </head>
-<body ng-app="requisitos_aulas" ng-controller="controllerTitulaciones as titu">
+<body ng-app="requisitos_aulas" >
+
+
+    <div ng-controller="controllerTitulaciones as titu" ng-cloak="">
+        <!-- The splash screen must be first -->
     <div class="row clearfix">
         <div class="col-md-12 column" >
             <div class="row clearfix">
                 <div class="col-md-4 column">
                     <div sticky offset="105" id="MenuRecursos">
+
+                        <h5> Gestión de Aulas </h5>
+                        <accordion close-others="oneAtATime" >
+                            <accordion-group  is-open="status.open" >
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
+                                    Aulas Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </div>
+                                </accordion-heading>
+                                    <div class="btn btn-default" ng-repeat="aula in titu.tiposAulaCentralizadas"
+                                         dnd-draggable="aula"
+                                         dnd-effect-allowed="copy"
+                                         dnd-type="tipoAulaNombre"
+                                         >
+                                        {{aula.DESCRIP}}
+                                    </div>
+                            </accordion-group>
+                            <accordion-group  is-open="status.open" >
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
+                                    Aulas No Centralizadas <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                </div>
+                                </accordion-heading>
+                                    <div class="btn btn-default" ng-repeat="aula in titu.tiposAulaNoCentralizadas"
+                                         dnd-draggable="aula"
+                                         dnd-effect-allowed="copy"
+                                         dnd-type="tipoAulaNombre"
+                                         >
+                                        {{aula.DESCRIP}}
+                                    </div>
+                            </accordion-group>
+                        </accordion>
+
+
                         <h5> Recursos Específicos </h5>
                         <accordion close-others="oneAtATime" >
                             <accordion-group  is-open="status.open" ng-repeat="recurso in titu.listaRecursos" ng-click="titu.showListaRecursos(recurso)">
-                                <div class ="trashcan"dnd-list="[]">
-                                <accordion-heading>
+
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
                                     {{recurso.tipo}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    </div>
                                 </accordion-heading>
 
-                                    <div class="btn btn-default" ng-repeat="tipoRecurso in recurso.recursos"
-                                         dnd-draggable="tipoRecurso"
-                                         dnd-effect-allowed="copy"
-                                         dnd-selected="models.selected = tipoRecurso">
-                                        {{tipoRecurso.descripcion}}
-                                    </div>
-
+                                <div class="btn btn-default" ng-repeat="tipoRecurso in recurso.recursos"
+                                     dnd-draggable="tipoRecurso"
+                                     dnd-effect-allowed="copy"
+                                     dnd-type="tipoRecursoNombre"
+                                        >
+                                    {{tipoRecurso.DESCRIP}}
                                 </div>
                             </accordion-group>
                         </accordion>
@@ -38,31 +77,84 @@
                       <tabset type="pills">
                         <tab ng-repeat="titulacion in titulaciones" heading="{{titulacion.CODTIT}}" active="tab.active" disabled="tab.disabled">
                           <accordion id="accordionCustom" close-others="oneAtATime" >
+
+
                             <accordion-group is-open="status.open" ng-repeat="curso in titulacion.cursos">
-                                <accordion-heading>
-                                    {{curso.nombre}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+
+                                <accordion-heading ng-click="isopen=!isopen">
+                                <div style="display: block;">
+
+                                    {{curso.nombre}}
+
+                                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                    </div>
                                 </accordion-heading>
+                                <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByCurso(titulacion.CODTIT, curso.nombre)" ><span aria-hidden="true">&times;</span></i>
                                 <div  ng-repeat="asignatura in curso.asignaturas">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered table-fixed">
                                                 <thead>
                                                 <tr>
-                                                    <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}</th>
-                                                    <th>Recurso</th>
+                                                    <th class="tablaNombreAsignatura">{{asignatura.NOMBRE}}
+                                                    </th>
+                                                    <th ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">Recurso
+                                                        <i ng-show="hoverEdit" type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, true)"  ><span aria-hidden="true">&times;</span></i>
+                                                    </th>
+                                                    <th ng-mouseover="hoverEdit2 = true" ng-mouseleave="hoverEdit2 = false">Aulas
+                                                        <i ng-show="hoverEdit2" type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByAsignatura(titulacion.CODTIT, curso.nombre, asignatura.CODASI, false)"  ><span aria-hidden="true">&times;</span></i>
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-repeat="actividad in asignatura.actividades">
-                                                    <td>{{actividad.ACTIVIDAD | capitalize}}</td>
-                                                    <td dnd-list="actividad.lista">
-                                                        <div class="btn btn-default" ng-repeat="tipoRecurso in actividad.lista"
+                                                    <td >{{actividad.ACTIVIDAD | capitalize}}
+                                                    </td>
+
+                                                    <td class="col-md-4" ng-mouseover="hoverEdit3 = actividad.listaRecursos.length" ng-mouseleave="hoverEdit3 = false"
+                                                            dnd-list="actividad.listaRecursos"
+                                                        dnd-allowed-types="allowedTypes1"
+                                                        dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
+
+                                                        <i ng-show="hoverEdit3" type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true)"
+                                                           aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                        <div ng-mouseover="hoverEdit4 = true" ng-mouseleave="hoverEdit4 = false"
+                                                                class="btn btn-default" ng-repeat="tipoRecurso in actividad.listaRecursos"
                                                              dnd-draggable="tipoRecurso"
                                                              dnd-effect-allowed="move"
-                                                             dnd-moved="actividad.lista.splice($index, 1)"
-                                                             dnd-selected="models.selected = tipoRecurso">
-                                                            {{tipoRecurso.descripcion}}
+                                                             dnd-type="tipoRecursoNombre"
+                                                             dnd-moved="actividad.listaRecursos.splice($index, 1)"
+                                                             >
+                                                            <i   ng-show="hoverEdit4" type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, true, tipoRecurso)"
+                                                               aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                            {{tipoRecurso.DESCRIP}}
                                                         </div>
                                                     </td>
 
+                                                    <td class="col-md-4" 
+                                                    ng-mouseover="hoverEdit5 = actividad.listaAulas.length" ng-mouseleave="hoverEdit5 = false"
+                                                        dnd-list="actividad.listaAulas"
+                                                        dnd-disable-if="actividad.listaAulas.length >= 1"
+                                                        dnd-allowed-types="allowedTypes2"
+                                                        dnd-drop="dropRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, item, type)">
+                                                        <i ng-show="hoverEdit5" type="btn" class="close" data-dismiss="modal" ng-click="removeByActividad(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false)"
+                                                           aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
+
+                                                        <div
+                                                                ng-mouseover="hoverEdit6 = true" ng-mouseleave="hoverEdit6 = false"
+                                                                class="btn btn-default" ng-repeat="aula in actividad.listaAulas"
+                                                             dnd-draggable="aula"
+                                                             dnd-type="tipoAulaNombre"
+                                                             dnd-effect-allowed="move"
+                                                             dnd-moved="actividad.listaAulas.splice($index, 1)"
+                                                             >
+                                                            <i
+                                                                    ng-show="hoverEdit6"
+                                                                    type="btn" class="close" data-dismiss="modal" ng-click="removeByRecurso(titulacion.CODTIT, curso.nombre, asignatura.CODASI, actividad.CODACT, false, aula)"
+                                                               aria-label="Close"><span aria-hidden="true">&times;</span></i>
+                                                            {{aula.DESCRIP}}
+                                                        </div>
+                                                    </td>
+    
                                                 </tr>
 
                                                 </tbody>
@@ -85,9 +177,12 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="js/spin.min.js"></script>
+<script src="js/angular-spinner.min.js"></script>
 <script src="js/angular-drag-and-drop-lists.min.js"></script>
 <script src="js/ui-bootstrap-tpls-0.12.1.min.js"></script>
 <script src="js/sticky.js"></script>
 <script src="js/app.js"></script>
+</div>
 </body>
 </html>
