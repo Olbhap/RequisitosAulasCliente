@@ -1,6 +1,31 @@
 body {
-    margin: 60px 80px;
+
 }
+html,body{
+    overflow: hidden;
+    height:100%;
+}
+.main { height:100%;}
+@media (min-width: 768px){
+    #izquierda {
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-vertical;
+    }
+
+    #derecha {
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-vertical;
+
+    }
+}
+#izquierda{
+    height:100%;
+}
+#derecha{
+    height:100%;
+}
+
+
 
 #lista_titu {
 

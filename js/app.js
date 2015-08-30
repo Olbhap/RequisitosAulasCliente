@@ -1,4 +1,4 @@
-var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists','sticky', 'angularSpinner']);
+var requisitos_aulas = angular.module("requisitos_aulas", ['ui.bootstrap','dndLists', 'angularSpinner']);
 
 requisitos_aulas.filter('capitalize', function() {
     return function(input, all) {
