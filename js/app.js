@@ -71,23 +71,20 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                                     actividad.listaRecursos=[];
                                     actividad.listaAulas=[];
                                     asignatura.actividades.push(actividad);
-                                    $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividad/'+actividad.CODACT+'/curso/2014-2015'+'/aulasCentralizadas').
+                                    $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividad/'+actividad.CODACT+'/curso/2014-2015'+'/aula').
                                         success(function(data) {
                                             angular.forEach(data, function(aulaCentralizada, key) {
                                                 actividad.listaAulas.push(aulaCentralizada);
-
                                             });
                                         });
-                                    $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividad/'+actividad.CODACT+'/curso/2014-2015'+'/aulasNoCentralizadas').
+                                    $http.get(urlAPI+'asignaturas/'+asignatura.CODASI+'/actividad/'+actividad.CODACT+'/curso/2014-2015'+'/recursos').
                                         success(function(data) {
-                                            angular.forEach(data, function(aulaNoCentralizada, key) {
-                                                actividad.listaAulas.push(aulaNoCentralizada);
+                                            angular.forEach(data, function(recurso, key) {
+                                                actividad.listaRecursos.push(recurso);
                                             });
                                         });
+
                                 });
-                                    $q.all(data).then(function () {
-                                        console.log("wtf?");
-                                    })
                             });
                         });
 
@@ -99,7 +96,7 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
 
             });
 
-            console.log(data);
+
 
 
         }).
@@ -267,8 +264,16 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                         {
                             if(asignatura.CODASI==codAsi) {
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
-                                    if(isRecurso)
-                                        actividad.listaRecursos.length=0;
+                                    if(isRecurso) {
+                                        actividad.listaRecursos.length = 0;
+                                        $http.delete(urlAPI+'asignaturas/'+codAsi+'/curso/2014-2015'+'/recursos').
+                                            then(function(response) {
+                                                console.log('DELETE: \n'+response.data)
+                                            }, function(response) {
+                                                // called asynchronously if an error occurs
+                                                // or server returns response with an error status.
+                                            });
+                                    }
                                     else {
                                         actividad.listaAulas.length = 0;
                                         console.log("DELETE: " + urlAPI + 'asignaturas/' + codAsi + '/curso/2014-2015' + '/tipoAula/');
@@ -303,8 +308,16 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                             if(asignatura.CODASI==codAsi) {
                                 angular.forEach(asignatura.actividades, function (actividad, key) {
                                     if(actividad.CODACT==codAct) {
-                                        if(isRecurso)
+                                        if(isRecurso) {
                                             actividad.listaRecursos.length=0;
+                                            $http.delete(urlAPI+'asignaturas/'+codAsi+'/actividad/'+codAct+'/curso/2014-2015'+'/recursos').
+                                                then(function(response) {
+                                                    console.log('DELETE: \n'+response.data)
+                                                }, function(response) {
+                                                    // called asynchronously if an error occurs
+                                                    // or server returns response with an error status.
+                                                });
+                                        }
                                         else {
                                            // /asignaturas/(\d+)/curso/(.+)/tipoAula/
                                             actividad.listaAulas.length=0;
@@ -338,6 +351,13 @@ requisitos_aulas.controller("controllerTitulaciones",['$scope','$http','usSpinne
                                     if(actividad.CODACT==codAct) {
                                         if(isRecurso) {
                                             actividad.listaRecursos.splice( actividad.listaRecursos.indexOf(recurso), 1 );
+                                            $http.delete(urlAPI+'asignaturas/'+codAsi+'/actividad/'+codAct+'/curso/2014-2015'+'/recursos/'+recurso.TIPORECURSO).
+                                                then(function(response) {
+                                                    console.log('DELETE: \n'+response.data)
+                                                }, function(response) {
+                                                    // called asynchronously if an error occurs
+                                                    // or server returns response with an error status.
+                                                });
                                         }
                                         else {
                                             actividad.listaAulas.splice( actividad.listaAulas.indexOf(recurso), 1 );
