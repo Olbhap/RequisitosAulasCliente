@@ -6,8 +6,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 </head>
-<body ng-app="requisitos_aulas" >
+<body ng-app="requisitos_aulas" style="margin-left:25px;">
 
+    <div class="row ">
+        <div class="col-sm-2">
+            <img src="img/ua.jpg" alt="Universidad de Alicante" style="margin: 10px;">
+        </div>
+    </div>
 
     <div ng-controller="controllerTitulaciones as titu" ng-cloak="" class="main">
         <div class="col-md-4 column" id="izquierda">
@@ -68,6 +73,7 @@
 
                     </div>
                 </div>
+
                 <div class="col-md-8 column" id="derecha">
                     <div>
                       <tabset type="pills">
@@ -75,15 +81,13 @@
                           <accordion id="accordionCustom" close-others="oneAtATime" >
 
 
-                            <accordion-group is-open="status.open" ng-repeat="curso in titulacion.cursos">
+                            <accordion-group ng-init="status.open = $first" is-open="status.open" ng-repeat="curso in titulacion.cursos">
 
                                 <accordion-heading ng-click="isopen=!isopen">
                                 <div style="display: block;">
-
                                     {{curso.nombre}}
-
                                     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-                                    </div>
+                                </div>
                                 </accordion-heading>
                                 <i type="btn" class="close" data-dismiss="modal" aria-label="Close" ng-click="removeByCurso(titulacion.CODTIT, curso.nombre)" ><span aria-hidden="true">&times;</span></i>
                                 <div  ng-repeat="asignatura in curso.asignaturas">
